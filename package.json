@@ -1,6 +1,6 @@
 {
   "name": "chat-gpt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "oui",
   "main": "src/server.ts",
   "repository": "https://github.com/Mathis-Gasparotto/chat-gpt",

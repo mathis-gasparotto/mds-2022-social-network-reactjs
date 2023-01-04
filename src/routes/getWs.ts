@@ -1,5 +1,6 @@
 import { Application } from "express-ws"
 import { WebSocket } from "ws"
+import { createPost } from "../../repositories/postRepository"
 import { findUserById } from "../../repositories/userRepository"
 
 export function getWs (app: Application, sockets: Map<string, WebSocket>) {
@@ -16,24 +17,37 @@ export function getWs (app: Application, sockets: Map<string, WebSocket>) {
     }))
     ws.on('message', (msg) => {
       sockets.forEach((socket) => {
-        if (socket !== ws) {
+        const jsonParsed = JSON.parse(msg.toString())
+        if (jsonParsed.type === 'message') {
+          if (socket !== ws) {
+            socket.send(JSON.stringify({
+              type: 'message',
+              data: {
+                name: user.name,
+                isMe: false,
+                msg: jsonParsed.data.msg
+              }
+            }))
+          } else {
+            socket.send(JSON.stringify({
+              type: 'message',
+              data: {
+                name: 'Me',
+                isMe: true,
+                msg: jsonParsed.data.msg
+              }
+            }))
+          }
+        }
+        if (jsonParsed.type === 'post') {
           socket.send(JSON.stringify({
-            type: "message",
+            type: 'post',
             data: {
-              name: user.name,
-              isMe: false,
-              msg
+              author: user.name,
+              content: jsonParsed.data.content
             }
           }))
-        } else {
-          socket.send(JSON.stringify({
-            type: "message",
-            data: {
-              name: 'Me',
-              isMe: true,
-              msg
-            }
-          }))
+          createPost(user.id, jsonParsed.data.content)
         }
       })
     })

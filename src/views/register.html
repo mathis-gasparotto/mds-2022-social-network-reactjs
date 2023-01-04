@@ -4,26 +4,27 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - ChatGPT</title>
+  <title>Register - Social Network</title>
   <link rel="shortcut icon" href="https://www.google.com/s2/favicons?sz=32&domain=nodejs.org" type="image/x-icon">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   
-  <h1>Login</h1>
+  <h1>Register</h1>
 
   <div class="login-forms">
     <div class="single-form">
-      <form method="POST" enctype="application/x-www-form-urlencoded" id="login-form">
+      <form method="POST" enctype="application/x-www-form-urlencoded" id="register-form">
         <input type="text" name="username" id="username" placeholder="Your username">
-        <button type="submit">Login</button>
+        <input type="text" name="name" id="name" placeholder="Your name">
+        <button type="submit">Register</button>
       </form>
     </div>
   </div>
 
-  <p>You don't have an account? <a href="/register">Go top Register Form</a></p>
+  <p>Have already an account? <a href="/login">Go top Login Form</a></p>
 
-  <script src="../displayError.js"></script>
+  <script src="/displayError.js"></script>
 
 </body>
 </html>

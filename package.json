@@ -1,6 +1,6 @@
 {
   "name": "@mathis-gasparotto/chat-node-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "oui",
   "main": "src/server.ts",
   "repository": "https://github.com/Mathis-Gasparotto/chat-gpt",

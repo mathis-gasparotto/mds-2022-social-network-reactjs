@@ -1,5 +1,5 @@
 {
-  "name": "@mathis-gasparotto/chat-node-js",
+  "name": "@mathis_gasparotto/chat-node-js",
   "version": "1.0.3",
   "description": "oui",
   "main": "src/server.ts",

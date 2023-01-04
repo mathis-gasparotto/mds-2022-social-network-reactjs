@@ -1,3 +1,4 @@
+import { User } from "@prisma/client"
 import { prisma } from "./prisma"
 
 export function findUserByUsername(username: string) {
@@ -57,4 +58,19 @@ export function deleteUser (id: string) {
 export function generateExpiresDateLoginCookie () : Date {
   const expiresDate = new Date()
   return new Date(expiresDate.setDate(expiresDate.getDate() + 30))
+}
+
+export async function getUserPostsByUserId (userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId
+    },
+    include: {
+      posts: true, // All posts where authorId == 20
+    },
+  })
+  if (!user) {
+    return null
+  }
+  return user.posts
 }

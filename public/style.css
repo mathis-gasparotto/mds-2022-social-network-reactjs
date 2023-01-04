@@ -37,3 +37,8 @@
   display: flex;
   justify-content: space-evenly;
 }
+.footer {
+  text-align: center;
+  padding: 5px 0;
+  line-height: 1;
+}

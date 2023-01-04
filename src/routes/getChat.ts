@@ -7,6 +7,6 @@ export function getChat(app: Application) {
       res.redirect('/login')
       return
     }
-    res.sendFile(path.join(__dirname, '../views/chat/index.html'))
+    res.render(path.join(__dirname, '../views/chat/index.ejs'))
   })
 }

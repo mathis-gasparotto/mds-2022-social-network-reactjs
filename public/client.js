@@ -10,7 +10,7 @@ function addMessage(msg, className) {
 function addPost(author, content) {
   const post = document.createElement('li')
   post.classList.add('post')
-  post.innerText = author + ': ' + content
+  post.innerHTML = '<b style="display: block">' + author + '</b>' + content.replace(/\n/gi, '<br>')
   document.querySelector('#post-list').appendChild(post)
 }
 
@@ -33,21 +33,23 @@ function connect() {
   }
   ws.onmessage = (event) => {
     const jsonParsed = JSON.parse(event.data)
-    if(jsonParsed.type === "setName") {
+    const userNameTag = document.querySelector('#connected .display-username')
+    if(jsonParsed.type === 'setName' && !userNameTag) {
       const userName = document.createElement('b')
+      userName.classList.add('display-username')
       userName.innerText = jsonParsed.data
       document.querySelector('#connected').appendChild(userName)
       return
     }
-    if (jsonParsed.type === "message" && jsonParsed.data.isMe) {
+    if (jsonParsed.type === 'message' && jsonParsed.data.isMe) {
       addMessage(jsonParsed.data.msg, 'message-send')
       return
     }
-    if(jsonParsed.type === "message") {
+    if(jsonParsed.type === 'message') {
       addMessage(jsonParsed.data.name + ': ' + jsonParsed.data.msg, 'message-received')
       return
     }
-    if(jsonParsed.type === "post") {
+    if(jsonParsed.type === 'post') {
       addPost(jsonParsed.data.author, jsonParsed.data.content)
       return
     }
@@ -56,32 +58,38 @@ function connect() {
 
 connect()
 
-document.querySelector('#message-form').addEventListener('submit', (e) => {
-  e.preventDefault()
-  const input = document.querySelector('#message-form #msg')
-  if (input.value.length === 0) {
-    return
-  }
-  ws.send(JSON.stringify({
-    type: "message",
-    data: {
-      msg: input.value
+const messageForm = document.querySelector('#message-form')
+if (messageForm) {
+  messageForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const input = document.querySelector('#message-form #msg')
+    if (input.value.length === 0) {
+      return
     }
-  }))
-  input.value = ''
-})
+    ws.send(JSON.stringify({
+      type: "message",
+      data: {
+        msg: input.value
+      }
+    }))
+    input.value = ''
+  })
+}
 
-document.querySelector('#post-form').addEventListener('submit', (e) => {
-  e.preventDefault()
-  const input = document.querySelector('#post-form #content')
-  if (input.value.length === 0) {
-    return
-  }
-  ws.send(JSON.stringify({
-    type: "post",
-    data: {
-      content: input.value
+const postForm = document.querySelector('#post-form')
+if (postForm) {
+  postForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const input = document.querySelector('#post-form #content')
+    if (input.value.length === 0) {
+      return
     }
-  }))
-  input.value = ''
-})
+    ws.send(JSON.stringify({
+      type: "post",
+      data: {
+        content: input.value
+      }
+    }))
+    input.value = ''
+  })
+}

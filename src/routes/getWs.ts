@@ -40,6 +40,9 @@ export function getWs (app: Application, sockets: Map<string, WebSocket>) {
           }
         }
         if (jsonParsed.type === 'post') {
+          if (socket === ws) {
+            createPost(user.id, jsonParsed.data.content)
+          }
           socket.send(JSON.stringify({
             type: 'post',
             data: {
@@ -47,7 +50,6 @@ export function getWs (app: Application, sockets: Map<string, WebSocket>) {
               content: jsonParsed.data.content
             }
           }))
-          createPost(user.id, jsonParsed.data.content)
         }
       })
     })

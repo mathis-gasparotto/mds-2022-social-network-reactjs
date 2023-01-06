@@ -11,7 +11,8 @@ function addPost(author, content) {
   const post = document.createElement('li')
   post.classList.add('post')
   post.innerHTML = '<b style="display: block">' + author + '</b>' + content.replace(/\n/gi, '<br>')
-  document.querySelector('#post-list').appendChild(post)
+  const container = document.querySelector('#post-list')
+  container.insertBefore(post, container.firstChild)
 }
 
 let ws

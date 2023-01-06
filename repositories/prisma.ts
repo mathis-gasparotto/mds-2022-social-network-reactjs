@@ -2,6 +2,12 @@ import { PrismaClient } from "@prisma/client"
 
 export const prisma = new PrismaClient
 
+async function deleteAllPosts() {
+  await prisma.post.deleteMany()
+}
+
+// deleteAllPosts()
+
 // const users = [
 //   {
 //     username: 'john',

@@ -14,9 +14,16 @@ export function getRoot (app: Application) {
     postsDB.forEach(async (post) => {
       posts.push({
         author: await getAuthorNameByPostId(post.id),
-        content: post.content
+        content: post.content,
+        createdAt: post.createdAt
       })
     })
-    res.render(path.join(__dirname, '../views/index.ejs'), {posts})
+    setTimeout(function() {
+      posts.sort(function (a, b) {
+        return b.createdAt - a.createdAt
+      })
+      res.render(path.join(__dirname, '../views/index.ejs'), {posts})
+    }, 100) // add timeout to have time to get author name on DB
+    
   })
 }

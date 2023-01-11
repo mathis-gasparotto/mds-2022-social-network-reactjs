@@ -1,7 +1,6 @@
 import { Application } from "express-ws"
 import path from 'path'
 import { getAllPosts, getAuthorNameByPostId } from "../../repositories/postRepository"
-import { prisma } from "../../repositories/prisma"
 
 export function getRoot (app: Application) {
   app.get('/', async (req, res) => {

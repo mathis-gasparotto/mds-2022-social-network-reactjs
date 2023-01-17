@@ -36,7 +36,7 @@ function main() {
   postLogout(app)
 
   app.listen(3000, () => {
-    console.log('Example app listenning on port 3000')
+    console.log('App listenning on http://localhost:3000/')
   })
 }
 

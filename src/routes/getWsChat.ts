@@ -1,20 +1,15 @@
 import { Application } from "express-ws"
 import { WebSocket } from "ws"
-import { createPost } from "../../repositories/postRepository"
-import { findUserById } from "../../repositories/userRepository"
+import { findUserById, sendName } from "../../repositories/userRepository"
 
-export function getWs (app: Application, sockets: Map<string, WebSocket>) {
-  app.ws('/ws', async (ws, req) => {
+export function getWsChat (app: Application, sockets: Map<string, WebSocket>) {
+  app.ws('/ws-chat', async (ws, req) => {
     const user = await findUserById(req.signedCookies.ssid)
     if (!user) {
       ws.close()
       return
     }
-    sockets.set(user.id, ws)
-    ws.send(JSON.stringify({
-      type: "setName",
-      data: user.name
-    }))
+    sendName(user, ws, sockets)
     ws.on('message', (msg) => {
       sockets.forEach((socket) => {
         const jsonParsed = JSON.parse(msg.toString())
@@ -38,18 +33,6 @@ export function getWs (app: Application, sockets: Map<string, WebSocket>) {
               }
             }))
           }
-        }
-        if (jsonParsed.type === 'post') {
-          if (socket === ws) {
-            createPost(user.id, jsonParsed.data.content)
-          }
-          socket.send(JSON.stringify({
-            type: 'post',
-            data: {
-              author: user.name,
-              content: jsonParsed.data.content
-            }
-          }))
         }
       })
     })

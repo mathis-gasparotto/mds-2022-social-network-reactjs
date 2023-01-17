@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Social Network</title>
-  <link rel="shortcut icon" href="https://www.google.com/s2/favicons?sz=32&domain=nodejs.org" type="image/x-icon">
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
+<%- include('partials/head', {title:"Register - Social Network"}) %>
   
+
+<main>
+
   <h1>Register</h1>
 
   <div class="login-forms">
@@ -24,7 +17,12 @@
 
   <p>Have already an account? <a href="/login">Go top Login Form</a></p>
 
-  <script src="/displayError.js"></script>
+</main>
 
-</body>
-</html>
+
+
+<%- include('partials/footer') %>
+
+<script src="/displayError.js"></script>
+
+<%- include('partials/foot') %>

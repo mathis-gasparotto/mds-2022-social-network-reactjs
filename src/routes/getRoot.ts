@@ -8,7 +8,7 @@ export function getRoot (app: Application) {
     try {
       const postsDB = await getAllPosts()
       if(!postsDB) {
-        res.render(path.join(__dirname, '../views/index.ejs'))
+        res.render(path.join(__dirname, '../views/posts.ejs'))
         return
       }
       postsDB.forEach(async (post) => {
@@ -22,7 +22,7 @@ export function getRoot (app: Application) {
         posts.sort(function (a, b) {
           return b.createdAt - a.createdAt
         })
-        res.render(path.join(__dirname, '../views/index.ejs'), {posts})
+        res.render(path.join(__dirname, '../views/posts.ejs'), {posts})
       }, 100) // add timeout to have time to get author name on DB
     } catch (e) {
       console.error(e)

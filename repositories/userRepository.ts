@@ -1,4 +1,5 @@
 import { User } from "@prisma/client"
+import { WebSocket } from "ws"
 import { prisma } from "./prisma"
 
 export function findUserByUsername(username: string) {
@@ -73,4 +74,12 @@ export async function getUserPostsByUserId (userId: string) {
     return null
   }
   return user.posts
+}
+
+export async function sendName (user: User, ws: WebSocket, sockets: Map<string, WebSocket>) {
+  sockets.set(user.id, ws)
+  ws.send(JSON.stringify({
+    type: "setName",
+    data: user.name
+  }))
 }

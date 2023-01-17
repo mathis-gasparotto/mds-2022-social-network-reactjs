@@ -5,7 +5,7 @@ import path from 'path'
 import { getLogin } from './routes/getLogin'
 import { postLogin } from './routes/postLogin'
 import { getChat } from './routes/getChat'
-import { getWs } from './routes/getWs'
+import { getWsPost } from './routes/getWsPost'
 import { postLogout } from './routes/postLogout'
 import { authMiddleware } from './middlewares/auth'
 import { getRegister } from './routes/getRegister'
@@ -32,7 +32,7 @@ function main() {
   app.use(authMiddleware)
   getRoot(app)
   getChat(app)
-  getWs(app, sockets)
+  getWsPost(app, sockets)
   postLogout(app)
 
   app.listen(3000, () => {

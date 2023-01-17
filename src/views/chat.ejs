@@ -1,0 +1,33 @@
+<%- include('partials/head', {title:"hat - Social Network"}) %>
+<%- include('partials/header') %>
+
+
+
+<main>
+
+  <h1>Chat</h1>
+
+  <p id="connected">Connected as: </p>
+
+  <div id="server-status"></div>
+  
+  <div class="message-list-container">
+    <ul id="message-list">
+    </ul>
+    <form id="message-form">
+      <input type="text" name="msg" id="msg">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <a href="/logout" class="btn">Disconnect</a>
+
+</main>
+
+
+
+<%- include('partials/footer') %>
+
+<script src="/chat.js"></script>
+
+<%- include('partials/foot') %>

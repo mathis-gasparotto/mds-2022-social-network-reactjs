@@ -1,12 +1,5 @@
 const serverStatus = document.querySelector('#server-status')
 
-function addMessage(msg, className) {
-  const message = document.createElement('li')
-  message.classList.add(className)
-  message.innerText = msg
-  document.querySelector('#message-list').appendChild(message)
-}
-
 function addPost(author, content) {
   const post = document.createElement('li')
   post.classList.add('post')
@@ -18,7 +11,7 @@ function addPost(author, content) {
 let ws
 
 function connect() {
-  ws = new WebSocket('ws://localhost:3000/ws')
+  ws = new WebSocket('ws://localhost:3000/ws-post')
   ws.onopen = () => {
     console.log('Connected')
     serverStatus.style.backgroundColor = 'green'
@@ -42,14 +35,6 @@ function connect() {
       document.querySelector('#connected').appendChild(userName)
       return
     }
-    if (jsonParsed.type === 'message' && jsonParsed.data.isMe) {
-      addMessage(jsonParsed.data.msg, 'message-send')
-      return
-    }
-    if(jsonParsed.type === 'message') {
-      addMessage(jsonParsed.data.name + ': ' + jsonParsed.data.msg, 'message-received')
-      return
-    }
     if(jsonParsed.type === 'post') {
       addPost(jsonParsed.data.author, jsonParsed.data.content)
       return
@@ -58,24 +43,6 @@ function connect() {
 }
 
 connect()
-
-const messageForm = document.querySelector('#message-form')
-if (messageForm) {
-  messageForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const input = document.querySelector('#message-form #msg')
-    if (input.value.length === 0) {
-      return
-    }
-    ws.send(JSON.stringify({
-      type: "message",
-      data: {
-        msg: input.value
-      }
-    }))
-    input.value = ''
-  })
-}
 
 const postForm = document.querySelector('#post-form')
 if (postForm) {

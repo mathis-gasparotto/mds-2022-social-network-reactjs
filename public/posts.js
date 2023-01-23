@@ -1,3 +1,5 @@
+const { WebSocket } = require('ws')
+
 const serverStatus = document.querySelector('#server-status')
 
 function addPost(author, content) {
@@ -28,14 +30,14 @@ function connect() {
   ws.onmessage = (event) => {
     const jsonParsed = JSON.parse(event.data)
     const userNameTag = document.querySelector('#connected .display-username')
-    if(jsonParsed.type === 'setName' && !userNameTag) {
+    if (jsonParsed.type === 'setName' && !userNameTag) {
       const userName = document.createElement('b')
       userName.classList.add('display-username')
       userName.innerText = jsonParsed.data
       document.querySelector('#connected').appendChild(userName)
       return
     }
-    if(jsonParsed.type === 'post') {
+    if (jsonParsed.type === 'post') {
       addPost(jsonParsed.data.author, jsonParsed.data.content)
       return
     }
@@ -52,12 +54,14 @@ if (postForm) {
     if (input.value.length === 0) {
       return
     }
-    ws.send(JSON.stringify({
-      type: "post",
-      data: {
-        content: input.value
-      }
-    }))
+    ws.send(
+      JSON.stringify({
+        type: 'post',
+        data: {
+          content: input.value,
+        },
+      })
+    )
     input.value = ''
   })
 }

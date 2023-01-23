@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from '@prisma/client'
 
-export const prisma = new PrismaClient
+export const prisma = new PrismaClient()
 
 async function deleteAllPosts() {
   await prisma.post.deleteMany()
@@ -23,7 +23,7 @@ async function deleteAllPosts() {
 //   prisma.user.upsert({
 //     where: {
 //       username: userObject.username
-//     }, 
+//     },
 //     create: {
 //       username: userObject.username,
 //       name: userObject.name

@@ -1,16 +1,16 @@
-import { prisma } from "./prisma"
-import { findUserById } from "./userRepository"
+import { prisma } from './prisma'
+import { findUserById } from './userRepository'
 
-export async function createPost (authorId: string, content: string) {
+export async function createPost(authorId: string, content: string) {
   return await prisma.post.create({
     data: {
       authorId,
-      content
-    }
+      content,
+    },
   })
 }
 
-export async function getAllPosts () {
+export async function getAllPosts() {
   return await prisma.post.findMany()
 }
 
@@ -20,12 +20,12 @@ export async function findPostById(id: string) {
   }
   return await prisma.post.findUnique({
     where: {
-      id
-    }
+      id,
+    },
   })
 }
 
-export async function getAuthorNameByPostId (id: string) {
+export async function getAuthorNameByPostId(id: string) {
   if (!id) {
     return null
   }
@@ -34,7 +34,7 @@ export async function getAuthorNameByPostId (id: string) {
     return null
   }
   let author = await findUserById(post.authorId)
-  if(!author) {
+  if (!author) {
     return null
   }
   return author.name

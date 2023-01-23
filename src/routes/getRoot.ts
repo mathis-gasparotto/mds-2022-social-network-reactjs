@@ -1,13 +1,16 @@
-import { Application } from "express-ws"
+import { Application } from 'express-ws'
 import path from 'path'
-import { getAllPosts, getAuthorNameByPostId } from "../../repositories/postRepository"
+import {
+  getAllPosts,
+  getAuthorNameByPostId,
+} from '../../repositories/postRepository'
 
-export function getRoot (app: Application) {
+export function getRoot(app: Application) {
   app.get('/', async (req, res) => {
     var posts = Array()
     try {
       const postsDB = await getAllPosts()
-      if(!postsDB) {
+      if (!postsDB) {
         res.render(path.join(__dirname, '../views/posts.ejs'))
         return
       }
@@ -15,19 +18,18 @@ export function getRoot (app: Application) {
         posts.push({
           author: await getAuthorNameByPostId(post.id),
           content: post.content,
-          createdAt: post.createdAt
+          createdAt: post.createdAt,
         })
       })
-      setTimeout(function() {
+      setTimeout(function () {
         posts.sort(function (a, b) {
           return b.createdAt - a.createdAt
         })
-        res.render(path.join(__dirname, '../views/posts.ejs'), {posts})
+        res.render(path.join(__dirname, '../views/posts.ejs'), { posts })
       }, 100) // add timeout to have time to get author name on DB
     } catch (e) {
       console.error(e)
       res.status(500).send('Internal Server Error')
     }
-    
   })
 }

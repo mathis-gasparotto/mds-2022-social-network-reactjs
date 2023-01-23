@@ -1,3 +1,5 @@
+const { WebSocket } = require('ws')
+
 const serverStatus = document.querySelector('#server-status')
 
 function addMessage(msg, className) {
@@ -27,7 +29,7 @@ function connect() {
   ws.onmessage = (event) => {
     const jsonParsed = JSON.parse(event.data)
     const userNameTag = document.querySelector('#connected .display-username')
-    if(jsonParsed.type === 'setName' && !userNameTag) {
+    if (jsonParsed.type === 'setName' && !userNameTag) {
       const userName = document.createElement('b')
       userName.classList.add('display-username')
       userName.innerText = jsonParsed.data
@@ -38,8 +40,11 @@ function connect() {
       addMessage(jsonParsed.data.msg, 'message-send')
       return
     }
-    if(jsonParsed.type === 'message') {
-      addMessage(jsonParsed.data.name + ': ' + jsonParsed.data.msg, 'message-received')
+    if (jsonParsed.type === 'message') {
+      addMessage(
+        jsonParsed.data.name + ': ' + jsonParsed.data.msg,
+        'message-received'
+      )
       return
     }
   }
@@ -55,12 +60,14 @@ if (messageForm) {
     if (input.value.length === 0) {
       return
     }
-    ws.send(JSON.stringify({
-      type: "message",
-      data: {
-        msg: input.value
-      }
-    }))
+    ws.send(
+      JSON.stringify({
+        type: 'message',
+        data: {
+          msg: input.value,
+        },
+      })
+    )
     input.value = ''
   })
 }

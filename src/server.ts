@@ -11,6 +11,7 @@ import { authMiddleware } from './middlewares/auth'
 import { getRegister } from './routes/getRegister'
 import { postRegister } from './routes/postRegister'
 import { getRoot } from './routes/getRoot'
+import open from 'open'
 
 function main() {
   const app = express() as unknown as Application
@@ -37,6 +38,7 @@ function main() {
 
   app.listen(3000, () => {
     console.log('App listenning on http://localhost:3000/')
+    open('http://localhost:3000/')
   })
 }
 

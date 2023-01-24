@@ -1,5 +1,3 @@
-const { WebSocket } = require('ws')
-
 const serverStatus = document.querySelector('#server-status')
 
 function addMessage(msg, className) {

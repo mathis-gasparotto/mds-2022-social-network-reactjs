@@ -2,8 +2,8 @@ const serverStatus = document.querySelector('#server-status')
 
 function addMessage(msg, className) {
   const message = document.createElement('li')
-  message.classList.add(className)
-  message.innerText = msg
+  message.classList.add(className, 'single-message')
+  message.innerHTML = msg
   document.querySelector('#message-list').appendChild(message)
 }
 
@@ -14,7 +14,6 @@ function connect() {
   ws.onopen = () => {
     console.log('Connected')
     serverStatus.style.backgroundColor = 'green'
-    // document.querySelector('#connected').innerText = 'Connected as: ' + event.data
   }
   ws.onclose = () => {
     console.log('Diconnected')
@@ -35,12 +34,12 @@ function connect() {
       return
     }
     if (jsonParsed.type === 'message' && jsonParsed.data.isMe) {
-      addMessage(jsonParsed.data.msg, 'message-send')
+      addMessage(jsonParsed.data.msg, 'message-sent')
       return
     }
     if (jsonParsed.type === 'message') {
       addMessage(
-        jsonParsed.data.name + ': ' + jsonParsed.data.msg,
+        '<b style="display: block;">' + jsonParsed.data.name + '</b>' + jsonParsed.data.msg,
         'message-received'
       )
       return

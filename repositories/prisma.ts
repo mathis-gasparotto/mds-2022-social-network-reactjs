@@ -6,6 +6,10 @@ async function deleteAllPosts() {
   await prisma.post.deleteMany()
 }
 
+async function deleteAllMessages() {
+  await prisma.chat.deleteMany()
+}
+
 // deleteAllPosts()
 
 // const users = [

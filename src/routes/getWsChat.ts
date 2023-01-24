@@ -1,5 +1,6 @@
 import { Application } from 'express-ws'
 import { WebSocket } from 'ws'
+import { createMessage } from '../../repositories/chatRepository'
 import { findUserById, sendName } from '../../repositories/userRepository'
 
 export function getWsChat(app: Application, sockets: Map<string, WebSocket>) {
@@ -14,29 +15,19 @@ export function getWsChat(app: Application, sockets: Map<string, WebSocket>) {
       sockets.forEach((socket) => {
         const jsonParsed = JSON.parse(msg.toString())
         if (jsonParsed.type === 'message') {
-          if (socket !== ws) {
-            socket.send(
-              JSON.stringify({
-                type: 'message',
-                data: {
-                  name: user.name,
-                  isMe: false,
-                  msg: jsonParsed.data.msg,
-                },
-              })
-            )
-          } else {
-            socket.send(
-              JSON.stringify({
-                type: 'message',
-                data: {
-                  name: 'Me',
-                  isMe: true,
-                  msg: jsonParsed.data.msg,
-                },
-              })
-            )
+          let dataToSend = {
+            type: 'message',
+            data: {
+              name: user.name,
+              isMe: false,
+              msg: jsonParsed.data.msg,
+            },
           }
+          if (socket === ws) {
+            dataToSend.data.isMe = true
+            createMessage(user.id, jsonParsed.data.msg)
+          }
+          socket.send(JSON.stringify(dataToSend))
         }
       })
     })

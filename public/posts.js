@@ -15,7 +15,6 @@ function connect() {
   ws.onopen = () => {
     console.log('Connected')
     serverStatus.style.backgroundColor = 'green'
-    // document.querySelector('#connected').innerText = 'Connected as: ' + event.data
   }
   ws.onclose = () => {
     console.log('Diconnected')

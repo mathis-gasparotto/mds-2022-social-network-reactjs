@@ -4,9 +4,10 @@ import {
   getAllPosts,
   getAuthorNameByPostId,
 } from '../../repositories/postRepository'
+import { authMiddleware } from '../middlewares/auth'
 
 export function getRoot(app: Application) {
-  app.get('/', async (req, res) => {
+  app.get('/', authMiddleware, async (req, res) => {
     var posts = Array()
     try {
       const postsDB = await getAllPosts()
@@ -26,7 +27,7 @@ export function getRoot(app: Application) {
           return b.createdAt - a.createdAt
         })
         res.render(path.join(__dirname, '../views/posts.ejs'), { posts })
-      }, 100) // add timeout to have time to get author name on DB
+      }, 500) // add timeout to have time to get author name on DB
     } catch (e) {
       console.error(e)
       res.status(500).send('Internal Server Error')

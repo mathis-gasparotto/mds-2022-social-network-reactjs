@@ -1,4 +1,4 @@
-<%- include('partials/head', {title:"hat - Social Network"}) %>
+<%- include('partials/head', {title:"Chat - Social Network"}) %>
 <%- include('partials/header') %>
 
 
@@ -13,14 +13,24 @@
   
   <div class="message-list-container">
     <ul id="message-list">
+      <% messages.forEach(function(message) { %>
+        <li class="single-message <% if (message.isMe) { %>
+          message-sent
+        <% } else { %>
+          message-received
+        <% } %> ">
+        <% if (!message.isMe) { %>
+          <b style="display: block;"><%= message.author %></b>
+        <% } %> 
+          <%- message.content.replace('\n', '<br>') %>
+        </li>
+      <% }); %>
     </ul>
     <form id="message-form">
       <input type="text" name="msg" id="msg">
       <button type="submit">Submit</button>
     </form>
   </div>
-
-  <a href="/logout" class="btn">Disconnect</a>
 
 </main>
 

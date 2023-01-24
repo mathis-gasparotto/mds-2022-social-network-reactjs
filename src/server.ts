@@ -12,6 +12,7 @@ import { getRegister } from './routes/getRegister'
 import { postRegister } from './routes/postRegister'
 import { getRoot } from './routes/getRoot'
 import open from 'open'
+import { getWsChat } from './routes/getWsChat'
 
 function main() {
   const app = express() as unknown as Application
@@ -34,11 +35,12 @@ function main() {
   getRoot(app)
   getChat(app)
   getWsPost(app, sockets)
+  getWsChat(app, sockets)
   postLogout(app)
 
   app.listen(3000, () => {
     console.log('App listenning on http://localhost:3000/')
-    open('http://localhost:3000/')
+    // open('http://localhost:3000/')
   })
 }
 

@@ -13,6 +13,9 @@ import { postRegister } from './routes/postRegister'
 import { getRoot } from './routes/getRoot'
 import open from 'open'
 import { getWsChat } from './routes/getWsChat'
+import { getProfile } from './routes/getProfile'
+import { postProfile } from './routes/postProfile'
+import { postDeleteAccount } from './routes/postDeleteAccount'
 
 function main() {
   const app = express() as unknown as Application
@@ -22,10 +25,6 @@ function main() {
   app.use(express.static(path.join(__dirname, '../public')))
   app.use(cookieParser(process.env.SECRET_KEY))
 
-  // app.get('/', (req, res) => {
-  //   res.sendFile(path.join(__dirname, 'index.html'))
-  // })
-
   getLogin(app)
   postLogin(app)
   getRegister(app)
@@ -34,9 +33,12 @@ function main() {
   app.use(authMiddleware)
   getRoot(app)
   getChat(app)
+  getProfile(app)
+  postProfile(app)
   getWsPost(app, sockets)
   getWsChat(app, sockets)
   postLogout(app)
+  postDeleteAccount(app)
 
   app.listen(3000, () => {
     console.log('App listenning on http://localhost:3000/')

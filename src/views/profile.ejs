@@ -1,0 +1,39 @@
+<%- include('partials/head', {title:'My Account - Social Network'}) %>
+<%- include('partials/header', {h1_title: 'My Account'}) %>
+  
+
+  <ul class="profile_data_list">
+    <li class="profile_data_item">
+      <span class="label">Name</span>
+      <span class="data"><%= user.name %></span>
+    </li>
+    <li class="profile_data_item">
+      <span class="label">Username</span>
+      <span class="data"><%= user.username %></span>
+    </li>
+  </ul>
+
+  <h2>Edit your profile data</h2>
+
+  <form method="post" class="profile_form">
+    <div class="row">
+      <label for="name">Name: </label>
+      <input type="text" name="name" id="name" placeholder="Name" value="<%= user.name %>">
+    </div>
+    <div class="row">
+      <label for="username">Username: </label>
+      <input type="text" name="username" id="username" placeholder="Username" value="<%= user.username %>">
+    </div>
+    <input type="submit" value="Submit" class="btn">
+  </form>
+
+  <form action="/delete-account" method="post" class="delete-account-form">
+    <input type="submit" value="Delete Account" class="btn btn-danger">
+  </form>
+
+
+<%- include('partials/footer') %>
+
+<script src="/displayError.js"></script>
+
+<%- include('partials/foot') %>

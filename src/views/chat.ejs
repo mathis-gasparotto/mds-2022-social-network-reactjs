@@ -1,16 +1,12 @@
-<%- include('partials/head', {title:"Chat - Social Network"}) %>
-<%- include('partials/header') %>
+<%- include('partials/head', {title:'Chat - Social Network'}) %>
+<%- include('partials/header', {h1_title: 'Chat'}) %>
 
 
-
-<main>
-
-  <h1>Chat</h1>
 
   <p id="connected">Connected as: </p>
 
   <div id="server-status"></div>
-  
+
   <div class="message-list-container">
     <ul id="message-list">
       <% messages.forEach(function(message) { %>
@@ -31,8 +27,6 @@
       <button type="submit">Submit</button>
     </form>
   </div>
-
-</main>
 
 
 

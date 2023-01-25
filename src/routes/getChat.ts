@@ -2,16 +2,15 @@ import { Application } from 'express-ws'
 import path from 'path'
 import { getAllMessages, getAuthorNameByMessageId } from '../../repositories/chatRepository'
 import { findUserById } from '../../repositories/userRepository'
-import { authMiddleware } from '../middlewares/auth'
 
 export function getChat(app: Application) {
-  app.get('/chat', authMiddleware, async (req, res) => {
-    const user = await findUserById(req.signedCookies.ssid)
-    if (!user) {
-      return
-    }
-    var messages = Array()
+  app.get('/chat', async (req, res) => {
     try {
+      const user = await findUserById(req.signedCookies.ssid)
+      if (!user) {
+        return
+      }
+      var messages = Array()
       const messagesDB = await getAllMessages()
       if (!messagesDB) {
         res.render(path.join(__dirname, '../views/messages.ejs'))

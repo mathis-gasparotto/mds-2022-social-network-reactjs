@@ -1,9 +1,9 @@
 import { Application } from 'express-ws'
+import { logoutUser } from '../../repositories/userRepository'
 
 export function postLogout(app: Application) {
   app.post('/logout', (req, res) => {
-    res.clearCookie('ssid')
-    res.redirect('/login')
+    logoutUser(res)
     return
   })
 }

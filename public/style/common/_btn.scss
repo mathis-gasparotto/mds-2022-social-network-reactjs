@@ -1,0 +1,43 @@
+.btn {
+  --bs-btn-color: black;
+  --bs-btn-bg: lightgray;
+  text-decoration: none;
+  color: var(--bs-btn-color);
+  padding: 7px 12px;
+  margin: 10px 0;
+  display: inline-block;
+  background-color: var(--bs-btn-bg);
+  
+  &.btn-primary {
+    --bs-btn-color: #084298;
+    --bs-btn-bg: #cfe2ff;
+  }
+  &.btn-secondary {
+    --bs-btn-color: #41464b;
+    --bs-btn-bg: #e2e3e5;
+  }
+  &.btn-success {
+    --bs-btn-color: #0f5132;
+    --bs-btn-bg: #d1e7dd;
+  }
+  &.btn-danger {
+    --bs-btn-color: #842029;
+    --bs-btn-bg: #f8d7da;
+  }
+  &.btn-warning {
+    --bs-btn-color: #664d03;
+    --bs-btn-bg: #fff3cd;
+  }
+  &.btn-info {
+    --bs-btn-color: #055160;
+    --bs-btn-bg: #cff4fc;
+  }
+  &.btn-light {
+    --bs-btn-color: #636464;
+    --bs-btn-bg: #fefefe;
+  }
+  &.btn-dark {
+    --bs-btn-color: #141619;
+    --bs-btn-bg: #d3d3d4;
+  }
+}

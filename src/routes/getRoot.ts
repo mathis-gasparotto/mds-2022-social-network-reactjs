@@ -4,10 +4,9 @@ import {
   getAllPosts,
   getAuthorNameByPostId,
 } from '../../repositories/postRepository'
-import { authMiddleware } from '../middlewares/auth'
 
 export function getRoot(app: Application) {
-  app.get('/', authMiddleware, async (req, res) => {
+  app.get('/', async (req, res) => {
     var posts = Array()
     try {
       const postsDB = await getAllPosts()

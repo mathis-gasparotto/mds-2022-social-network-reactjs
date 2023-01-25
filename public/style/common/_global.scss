@@ -1,0 +1,59 @@
+#message-list {
+  list-style-type: none; 
+  width: 500px;
+  height: 400px;
+  overflow: auto;
+  padding: 0;
+  .message-received {
+    text-align: left;
+    padding: 10px;
+    background-color: lightgray;
+    border-radius: 10px;
+    margin: 10px 50px 10px 0;
+  }
+  .message-sent {
+    text-align: right;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0 10px 50px;
+    background-color: rgb(108, 187, 213);
+  }
+}
+#server-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+}
+.login-forms {
+  display: flex;
+  justify-content: space-evenly;
+}
+.main {
+  min-height: 100vh;
+}
+.profile_data_list {
+  padding: 0;
+  margin: 20px 0;
+  width: 500px;
+  .profile_data_item {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    .data, .label {
+      width: 45%;
+    }
+    .label {
+      font-weight: 700;
+      text-align: right;
+    }
+  }
+}
+.profile_form {
+  .row {
+    display: block;
+  }
+}
+.delete-account-form {
+  margin-top: 150px;
+}

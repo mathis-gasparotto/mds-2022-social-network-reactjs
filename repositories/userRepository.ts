@@ -1,4 +1,5 @@
 import { User } from '@prisma/client'
+import { Response } from 'express'
 import { WebSocket } from 'ws'
 import { prisma } from './prisma'
 
@@ -54,6 +55,12 @@ export function deleteUser(id: string) {
       id,
     },
   })
+}
+
+export function logoutUser(res: Response) {
+  res.clearCookie('ssid')
+  res.redirect('/login')
+  return
 }
 
 export function generateExpiresDateLoginCookie(): Date {

@@ -1,6 +1,9 @@
 import { prisma } from './prisma'
 import { findUserById } from './userRepository'
 
+// const uuidv4 = require('uuid/v4')
+// var filename = uuidv4()
+
 export async function createPost(authorId: string, content: string) {
   return await prisma.post.create({
     data: {

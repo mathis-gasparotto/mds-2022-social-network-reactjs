@@ -13,7 +13,7 @@
     </li>
     <li class="profile_data_item">
       <span class="label">Avatar</span>
-      <span class="data"><img src="<%= user.avatar %>" alt="<%= user.username %>-avatar" class="user-avatar"></span>
+      <span class="data"><img src="/img/avatar/<%= user.avatar %>" alt="<%= user.username %>-avatar" class="user-avatar"></span>
     </li>
   </ul>
 
@@ -30,7 +30,7 @@
     </div>
     <div class="row">
       <label for="avatar">New Avatar (void for no update) (max 8 MB): </label>
-      <input type="file" name="avatar" id="avatar" value="<%= user.avatar %>" accept="image/png, image/jpeg, image/jpg">
+      <input type="file" name="avatar" id="avatar" accept="image/png, image/jpeg, image/jpg">
     </div>
     <input type="submit" value="Submit" class="btn">
   </form>

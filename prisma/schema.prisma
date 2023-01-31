@@ -14,7 +14,7 @@ model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   username  String   @unique
   name      String
-  avatar    String   @default("/img/avatar/default_avatar.png")
+  avatar    String   @default("default_avatar.png")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]

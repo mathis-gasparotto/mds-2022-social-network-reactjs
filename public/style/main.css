@@ -53,6 +53,9 @@
   font-weight: 700;
   text-align: right;
 }
+.profile_data_list .profile_data_item .data .user-avatar {
+  width: 100px;
+}
 
 .profile_form .row {
   display: block;

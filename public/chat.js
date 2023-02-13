@@ -39,7 +39,10 @@ function connect() {
     }
     if (jsonParsed.type === 'message') {
       addMessage(
-        '<b style="display: block;">' + jsonParsed.data.name + '</b>' + jsonParsed.data.msg,
+        '<b style="display: block;">' +
+          jsonParsed.data.name +
+          '</b>' +
+          jsonParsed.data.msg,
         'message-received'
       )
       return

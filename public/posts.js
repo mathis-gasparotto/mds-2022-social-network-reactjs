@@ -3,7 +3,11 @@ const serverStatus = document.querySelector('#server-status')
 function addPost(author, content) {
   const post = document.createElement('li')
   post.classList.add('post')
-  post.innerHTML = '<b style="display: block">' + author + '</b>' + content.replace(/\n/gi, '<br>')
+  post.innerHTML =
+    '<b style="display: block">' +
+    author +
+    '</b>' +
+    content.replace(/\n/gi, '<br>')
   const container = document.querySelector('#post-list')
   container.insertBefore(post, container.firstChild)
 }

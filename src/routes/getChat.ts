@@ -1,6 +1,9 @@
 import { Application } from 'express-ws'
 import path from 'path'
-import { getAllMessages, getAuthorNameByMessageId } from '../../repositories/chatRepository'
+import {
+  getAllMessages,
+  getAuthorNameByMessageId,
+} from '../../repositories/chatRepository'
 import { findUserById } from '../../repositories/userRepository'
 
 export function getChat(app: Application) {

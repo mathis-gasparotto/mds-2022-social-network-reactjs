@@ -13,7 +13,7 @@ export function postProfile(app: Application) {
         fileSize: 8 * (1024 * 1024), // max 8 MB
       },
       abortOnLimit: true,
-      uriDecodeFileNames: true
+      uriDecodeFileNames: true,
     }),
     async (req, res) => {
       let avatarToSave
@@ -29,8 +29,11 @@ export function postProfile(app: Application) {
 
         file.name = req.signedCookies.ssid + extensionName
 
-        const filePath = path.join(__dirname, '../../public/img/avatar/' + file.name)
-        
+        const filePath = path.join(
+          __dirname,
+          '../../public/img/avatar/' + file.name
+        )
+
         file.mv(filePath, (err) => {
           if (err) {
             return res.status(500).send(err)
@@ -65,7 +68,12 @@ export function postProfile(app: Application) {
           return
         }
         user.avatar = avatarToSave ? avatarToSave : currentUser.avatar
-        await updateUser(req.signedCookies.ssid, user.username, user.name, user.avatar)
+        await updateUser(
+          req.signedCookies.ssid,
+          user.username,
+          user.name,
+          user.avatar
+        )
         let state = encodeURI('Profile updated successfully!')
         res.redirect('/profile?success=' + state)
       } catch (e) {

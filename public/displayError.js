@@ -28,6 +28,7 @@ if (paramsString) {
   if (new_params_arr.length > 0) {
     newParamsString = '?' + new_params_arr.join('$')
   }
-  const newUrl = document.location.origin + document.location.pathname + newParamsString
+  const newUrl =
+    document.location.origin + document.location.pathname + newParamsString
   window.history.pushState({}, '', newUrl)
 }

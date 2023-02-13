@@ -47,22 +47,15 @@ function connect() {
 
 connect()
 
-const postForm = document.querySelector('#post-form')
-if (postForm) {
-  postForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const input = document.querySelector('#post-form #content')
-    if (input.value.length === 0) {
-      return
-    }
-    ws.send(
-      JSON.stringify({
-        type: 'post',
-        data: {
-          content: input.value,
-        },
-      })
-    )
-    input.value = ''
-  })
-}
+// const postForm = document.querySelector('#post-form')
+// if (postForm) {
+//   postForm.addEventListener('submit', (e) => {
+//     e.preventDefault()
+//     const input = document.querySelector('#post-form #content')
+//     if (input.value.length === 0) {
+//       return
+//     }
+    
+//     input.value = ''
+//   })
+// }

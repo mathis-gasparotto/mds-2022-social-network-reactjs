@@ -17,8 +17,15 @@
         </li>
       <% }); %>
     </ul>
-    <form id="post-form" method="POST">
-      <textarea name="content" id="content" cols="30" rows="10" placeholder="Your publication"></textarea>
+    <form id="post-form" method="POST" action="/post">
+      <div class="row">
+        <label for="content">Content</label>
+        <textarea name="content" id="content" cols="30" rows="10" placeholder="Your publication"></textarea>
+      </div>
+      <div class="row">
+        <label for="image">Image (max 8 MB): </label>
+        <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg">
+      </div>
       <button type="submit">Post</button>
     </form>
   </div>
@@ -28,5 +35,6 @@
 <%- include('partials/footer') %>
 
 <script src="/posts.js"></script>
+<script src="/displayError.js"></script>
 
 <%- include('partials/foot') %>

@@ -11,11 +11,12 @@ import { authMiddleware } from './middlewares/auth'
 import { getRegister } from './routes/getRegister'
 import { postRegister } from './routes/postRegister'
 import { getRoot } from './routes/getRoot'
-import open from 'open'
+// import open from 'open'
 import { getWsChat } from './routes/getWsChat'
 import { getProfile } from './routes/getProfile'
 import { postProfile } from './routes/postProfile'
 import { postDeleteAccount } from './routes/postDeleteAccount'
+import { postPost } from './routes/postPost'
 
 function main() {
   const app = express() as unknown as Application
@@ -35,6 +36,7 @@ function main() {
   getChat(app)
   getProfile(app)
   postProfile(app)
+  postPost(app)
   getWsPost(app, sockets)
   getWsChat(app, sockets)
   postLogout(app)

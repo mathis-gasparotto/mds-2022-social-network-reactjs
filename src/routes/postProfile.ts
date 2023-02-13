@@ -48,22 +48,22 @@ export function postProfile(app: Application) {
           return
         }
         if (!user.name) {
-          let error = encodeURI('Name property not be null')
+          const error = encodeURI('Name property not be null')
           res.status(401).redirect('/profile?error=' + error)
           return
         }
         if (!user.username) {
-          let error = encodeURI('Username property not be null')
+          const error = encodeURI('Username property not be null')
           res.status(401).redirect('/profile?error=' + error)
           return
         }
         if (typeof user.name !== 'string') {
-          let error = encodeURI('Name property must be a string')
+          const error = encodeURI('Name property must be a string')
           res.status(401).redirect('/profile?error=' + error)
           return
         }
         if (typeof user.username !== 'string') {
-          let error = encodeURI('Username property must be a string')
+          const error = encodeURI('Username property must be a string')
           res.status(401).redirect('/profile?error=' + error)
           return
         }
@@ -74,8 +74,8 @@ export function postProfile(app: Application) {
           user.name,
           user.avatar
         )
-        let state = encodeURI('Profile updated successfully!')
-        res.redirect('/profile?success=' + state)
+        const state = encodeURI('Profile updated successfully!')
+        res.redirect('/?success=' + state)
       } catch (e) {
         console.error(e)
         res.status(500).send('Internal Server Error')

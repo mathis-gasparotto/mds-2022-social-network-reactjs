@@ -49,22 +49,22 @@ export function postProfile(app: Application) {
         }
         if (!user.name) {
           const error = encodeURI('Name property not be null')
-          res.status(401).redirect('/profile?error=' + error)
+          res.status(400).redirect('/profile?error=' + error)
           return
         }
         if (!user.username) {
           const error = encodeURI('Username property not be null')
-          res.status(401).redirect('/profile?error=' + error)
+          res.status(400).redirect('/profile?error=' + error)
           return
         }
         if (typeof user.name !== 'string') {
           const error = encodeURI('Name property must be a string')
-          res.status(401).redirect('/profile?error=' + error)
+          res.status(400).redirect('/profile?error=' + error)
           return
         }
         if (typeof user.username !== 'string') {
           const error = encodeURI('Username property must be a string')
-          res.status(401).redirect('/profile?error=' + error)
+          res.status(400).redirect('/profile?error=' + error)
           return
         }
         user.avatar = avatarToSave ? avatarToSave : currentUser.avatar
@@ -78,7 +78,8 @@ export function postProfile(app: Application) {
         res.redirect('/?success=' + state)
       } catch (e) {
         console.error(e)
-        res.status(500).send('Internal Server Error')
+        const error = encodeURI('Internal Server Error')
+        res.status(500).redirect('/profile?error=' + error)
       }
     }
   )

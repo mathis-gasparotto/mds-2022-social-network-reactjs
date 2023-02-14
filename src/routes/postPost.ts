@@ -5,8 +5,9 @@ import fileUpload, { UploadedFile } from 'express-fileupload'
 import { v4 as uuidv4 } from 'uuid'
 import { createPost } from '../../repositories/postRepository'
 import { WebSocket } from 'ws'
+import { findUserById } from '../../repositories/userRepository'
 
-export function postPost(app: Application) {
+export function postPost(app: Application, sockets: Map<string, WebSocket>) {
   app.post(
     '/post',
     bodyParser.urlencoded(),
@@ -18,10 +19,10 @@ export function postPost(app: Application) {
       uriDecodeFileNames: true,
     }),
     async (req, res) => {
-      const ws = new WebSocket('ws://localhost:3000/ws-post')
-      let imageToSave
+      // const ws = new WebSocket('ws://localhost:3000/ws-post')
+      let file
       if (req.files) {
-        const file = req.files.image as UploadedFile
+        file = req.files.image as UploadedFile
 
         const extensionName = path.extname(file.name) // fetch the file extension
         const allowedExtension = ['.png', '.jpg', '.jpeg']
@@ -35,40 +36,46 @@ export function postPost(app: Application) {
         const filePath = path.join(
           __dirname,
           '../../public/img/post_image/' + file.name
-          )
+        )
 
         file.mv(filePath, (err) => {
           if (err) {
             return res.status(500).send(err)
           }
-          imageToSave = file.name
-          console.log('1', imageToSave)
         })
-        console.log('2', imageToSave)
       }
       let post = req.body
       try {
         if (!post.content) {
           const error = encodeURI('Post content not be null')
-          res.status(401).redirect('/?error=' + error)
+          res.status(400).redirect('/?error=' + error)
           return
         }
-        console.log('3', imageToSave)
-        await createPost(req.signedCookies.ssid, post.content, imageToSave)
+        const imageToSave = file ? file.name : ''
+        const createdPost = await createPost(req.signedCookies.ssid, post.content, imageToSave)
+        const user = await findUserById(req.signedCookies.ssid)
+        if(!user) {
+          return
+        }
+        sockets.forEach((socket) => {
+          socket.send(
+            JSON.stringify({
+              type: 'post',
+              data: {
+                author: user.name,
+                date: createdPost.createdAt,
+                content: post.content,
+                image: '/img/post_image/' + imageToSave
+              },
+            })
+          )
+        })
         const state = encodeURI('Post send successfully!')
-        ws.send(
-          JSON.stringify({
-            type: 'post',
-            data: {
-              content: post.content,
-              image: imageToSave
-            },
-          })
-        )
-        res.redirect('/?success=' + state)
+        res.status(401).redirect('/?success=' + state)
       } catch (e) {
         console.error(e)
-        res.status(500).send('Internal Server Error')
+        const error = encodeURI('Internal Server Error')
+        res.status(500).redirect('/?error=' + error)
       }
     }
   )

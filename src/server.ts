@@ -36,7 +36,7 @@ function main() {
   getChat(app)
   getProfile(app)
   postProfile(app)
-  postPost(app)
+  postPost(app, sockets)
   getWsPost(app, sockets)
   getWsChat(app, sockets)
   postLogout(app)

@@ -211,8 +211,9 @@
 .post-list-container #post-list .single-post-author {
   font-weight: 700;
 }
-.post-list-container #post-list .single-post-image-container {
-  width: 200px;
+.post-list-container #post-list .single-post-image {
+  max-width: 100%;
+  max-height: 300px;
 }
 .post-list-container #post-list .single-post-date {
   font-weight: 300;

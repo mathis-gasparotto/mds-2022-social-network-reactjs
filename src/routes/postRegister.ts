@@ -15,9 +15,10 @@ export function postRegister(app: Application) {
       }
       const user = await createUser(username, name)
       if (!user) {
+        const error = encodeURI('Username already used')
         res
-          .status(400)
-          .redirect('/register?error=' + encodeURI('Username already used'))
+          .status(422)
+          .redirect('/register?error=' + error)
         return
       }
       res.cookie('ssid', user.id, {
@@ -29,7 +30,8 @@ export function postRegister(app: Application) {
       res.redirect('/')
     } catch (e) {
       console.error(e)
-      res.status(500).send('Internal Server Error')
+      const error = encodeURI('Internal Server Error')
+      res.status(500).send('/register?error=' + error)
     }
   })
 }

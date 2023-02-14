@@ -19,14 +19,13 @@
             month: 'numeric', 
             hour: 'numeric',
             minute: 'numeric',
-            second: 'numeric',
-           }) %></div>
+          }) %></div>
           <div class="single-post-content">
             <%- post.content.replace('\n', '<br>') %>
           </div>
           <% if (post.image) { %>
             <div class="single-post-image-container">
-              <img src="<%= post.image %>" alt="<%= post.image %>" class="single-post-image">
+              <img src="/img/post_image/<%= post.image %>" alt="<%= post.image %>" class="single-post-image">
             </div>
           <% } %>
         </li>
@@ -35,7 +34,7 @@
     <form id="post-form" method="POST" action="/post" enctype="multipart/form-data">
       <div class="row">
         <label for="content">Content: </label>
-        <textarea name="content" id="content" cols="30" rows="10" placeholder="Your publication"></textarea>
+        <textarea name="content" id="content" cols="100" rows="15" placeholder="Your publication"></textarea>
       </div>
       <div class="row">
         <label for="image">Image (max 8 MB): </label>

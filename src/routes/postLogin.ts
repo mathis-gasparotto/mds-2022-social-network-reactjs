@@ -28,7 +28,8 @@ export function postLogin(app: Application) {
         res.redirect('/')
       } catch (e) {
         console.error(e)
-        res.status(500).send('Internal Server Error')
+        const error = encodeURI('Internal Server Error')
+        res.status(500).send('/login?error=' + error)
       }
     }
   )

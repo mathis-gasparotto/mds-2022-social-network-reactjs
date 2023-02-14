@@ -16,14 +16,16 @@ export function getWsPost(app: Application, sockets: Map<string, WebSocket>) {
         const jsonParsed = JSON.parse(msg.toString())
         if (jsonParsed.type === 'post') {
           if (socket === ws) {
-            createPost(user.id, jsonParsed.data.content)
+            createPost(user.id, jsonParsed.data.content, jsonParsed.data.image)
           }
           socket.send(
             JSON.stringify({
               type: 'post',
               data: {
                 author: user.name,
+                createdAt: new Date(),
                 content: jsonParsed.data.content,
+                image: jsonParsed.data.image
               },
             })
           )

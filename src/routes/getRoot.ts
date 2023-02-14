@@ -18,6 +18,7 @@ export function getRoot(app: Application) {
         posts.push({
           author: await getAuthorNameByPostId(post.id),
           content: post.content,
+          image: post.image,
           createdAt: post.createdAt,
         })
       })

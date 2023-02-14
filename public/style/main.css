@@ -192,4 +192,29 @@
   text-align: center;
   padding: 5px 0;
   line-height: 1;
+}
+
+.post-list-container #post-list {
+  width: 500px;
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.post-list-container #post-list .single-post {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.post-list-container #post-list .single-post-author {
+  font-weight: 700;
+}
+.post-list-container #post-list .single-post-image-container {
+  width: 200px;
+}
+.post-list-container #post-list .single-post-date {
+  font-weight: 300;
+  font-size: 0.85rem;
 }/*# sourceMappingURL=main.css.map */

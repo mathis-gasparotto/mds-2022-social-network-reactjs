@@ -34,23 +34,26 @@ export function postPost(app: Application) {
 
         const filePath = path.join(
           __dirname,
-          '../../public/image/post_image/' + file.name
-        )
+          '../../public/img/post_image/' + file.name
+          )
 
         file.mv(filePath, (err) => {
           if (err) {
             return res.status(500).send(err)
           }
           imageToSave = file.name
+          console.log('1', imageToSave)
         })
+        console.log('2', imageToSave)
       }
       let post = req.body
       try {
         if (!post.content) {
           const error = encodeURI('Post content not be null')
-          res.status(401).redirect('/profile?error=' + error)
+          res.status(401).redirect('/?error=' + error)
           return
         }
+        console.log('3', imageToSave)
         await createPost(req.signedCookies.ssid, post.content, imageToSave)
         const state = encodeURI('Post send successfully!')
         ws.send(
@@ -58,10 +61,11 @@ export function postPost(app: Application) {
             type: 'post',
             data: {
               content: post.content,
+              image: imageToSave
             },
           })
         )
-        res.redirect('/profile?success=' + state)
+        res.redirect('/?success=' + state)
       } catch (e) {
         console.error(e)
         res.status(500).send('Internal Server Error')

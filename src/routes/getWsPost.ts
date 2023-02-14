@@ -25,7 +25,7 @@ export function getWsPost(app: Application, sockets: Map<string, WebSocket>) {
                 author: user.name,
                 createdAt: new Date(),
                 content: jsonParsed.data.content,
-                image: jsonParsed.data.image
+                image: jsonParsed.data.image,
               },
             })
           )

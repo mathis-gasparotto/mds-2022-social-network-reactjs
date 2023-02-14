@@ -12,9 +12,9 @@ function addPost(author, date, content, image = null) {
   dateElem.innerText = dateObject.toLocaleString('fr-FR', {
     day: 'numeric',
     year: 'numeric',
-    month: 'numeric', 
+    month: 'numeric',
     hour: 'numeric',
-    minute: 'numeric'
+    minute: 'numeric',
   })
   const contentElem = document.createElement('div')
   contentElem.classList.add('single-post-content')
@@ -63,7 +63,12 @@ function connect() {
       return
     }
     if (jsonParsed.type === 'post') {
-      addPost(jsonParsed.data.author, jsonParsed.data.date, jsonParsed.data.content, jsonParsed.data.image)
+      addPost(
+        jsonParsed.data.author,
+        jsonParsed.data.date,
+        jsonParsed.data.content,
+        jsonParsed.data.image
+      )
       return
     }
   }

@@ -16,9 +16,7 @@ export function postRegister(app: Application) {
       const user = await createUser(username, name)
       if (!user) {
         const error = encodeURI('Username already used')
-        res
-          .status(422)
-          .redirect('/register?error=' + error)
+        res.status(422).redirect('/register?error=' + error)
         return
       }
       res.cookie('ssid', user.id, {

@@ -2,13 +2,13 @@ import { PrismaClient } from '@prisma/client'
 
 export const prisma = new PrismaClient()
 
-async function deleteAllPosts() {
-  await prisma.post.deleteMany()
-}
+// async function deleteAllPosts() {
+//   await prisma.post.deleteMany()
+// }
 
-async function deleteAllMessages() {
-  await prisma.chat.deleteMany()
-}
+// async function deleteAllMessages() {
+//   await prisma.chat.deleteMany()
+// }
 
 // deleteAllPosts()
 

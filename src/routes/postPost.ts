@@ -52,9 +52,13 @@ export function postPost(app: Application, sockets: Map<string, WebSocket>) {
           return
         }
         const imageToSave = file ? file.name : ''
-        const createdPost = await createPost(req.signedCookies.ssid, post.content, imageToSave)
+        const createdPost = await createPost(
+          req.signedCookies.ssid,
+          post.content,
+          imageToSave
+        )
         const user = await findUserById(req.signedCookies.ssid)
-        if(!user) {
+        if (!user) {
           return
         }
         sockets.forEach((socket) => {
@@ -65,7 +69,7 @@ export function postPost(app: Application, sockets: Map<string, WebSocket>) {
                 author: user.name,
                 date: createdPost.createdAt,
                 content: post.content,
-                image: '/img/post_image/' + imageToSave
+                image: '/img/post_image/' + imageToSave,
               },
             })
           )

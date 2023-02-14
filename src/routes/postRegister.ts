@@ -4,9 +4,10 @@ import {
   createUser,
   generateExpiresDateLoginCookie,
 } from '../../repositories/userRepository'
+import { guestMiddleware } from '../middlewares/guest'
 
 export function postRegister(app: Application) {
-  app.post('/register', bodyParser.urlencoded(), async (req, res) => {
+  app.post('/register', guestMiddleware, bodyParser.urlencoded(), async (req, res) => {
     try {
       const { username, name } = req.body
       if (!username || !name) {
@@ -25,11 +26,11 @@ export function postRegister(app: Application) {
         expires: generateExpiresDateLoginCookie(),
         sameSite: true,
       })
-      res.redirect('/')
+      res.status(200).redirect('/')
     } catch (e) {
       console.error(e)
       const error = encodeURI('Internal Server Error')
-      res.status(500).send('/register?error=' + error)
+      res.status(500).redirect('/register?error=' + error)
     }
   })
 }

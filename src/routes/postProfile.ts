@@ -24,7 +24,8 @@ export function postProfile(app: Application) {
         const allowedExtension = ['.png', '.jpg', '.jpeg']
 
         if (!allowedExtension.includes(extensionName)) {
-          return res.status(422).send('Invalid Image')
+          const error = encodeURI('Invalid Image')
+          return res.status(422).redirect('/profile?error=' + error)
         }
 
         file.name = req.signedCookies.ssid + extensionName
@@ -75,7 +76,7 @@ export function postProfile(app: Application) {
           user.avatar
         )
         const state = encodeURI('Profile updated successfully!')
-        res.redirect('/?success=' + state)
+        res.redirect('/profile?success=' + state)
       } catch (e) {
         console.error(e)
         const error = encodeURI('Internal Server Error')

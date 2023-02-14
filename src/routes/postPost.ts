@@ -28,7 +28,8 @@ export function postPost(app: Application, sockets: Map<string, WebSocket>) {
         const allowedExtension = ['.png', '.jpg', '.jpeg']
 
         if (!allowedExtension.includes(extensionName)) {
-          return res.status(422).send('Invalid Image')
+          const error = encodeURI('Invalid Image')
+          return res.status(422).redirect('/?error=' + error)
         }
 
         file.name = uuidv4() + extensionName

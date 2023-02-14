@@ -2,6 +2,8 @@
 <%- include('partials/header', {h1_title: 'My Account'}) %>
   
 
+<main class="main">
+
   <ul class="profile_data_list">
     <li class="profile_data_item">
       <span class="label">Name</span>
@@ -16,9 +18,9 @@
       <span class="data"><img src="/img/avatar/<%= user.avatar %>" alt="<%= user.username %>-avatar" class="user-avatar"></span>
     </li>
   </ul>
-
+  
   <h2>Edit your profile data</h2>
-
+  
   <form method="post" class="profile_form" enctype="multipart/form-data">
     <div class="row">
       <label for="name">Name: </label>
@@ -34,10 +36,12 @@
     </div>
     <input type="submit" value="Submit" class="btn">
   </form>
-
+  
   <form action="/delete-account" method="post" class="delete-account-form">
     <input type="submit" value="Delete Account" class="btn btn-danger">
   </form>
+
+</main>
 
 
 <%- include('partials/footer') %>

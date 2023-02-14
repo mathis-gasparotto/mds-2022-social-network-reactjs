@@ -2,48 +2,51 @@
 <%- include('partials/header', {h1_title: 'Social Network'}) %>
 
 
-  
-  <p id="connected">Connected as: </p>
+  <main class="main">
 
-  <div id="server-status"></div>
+    <p id="connected">Connected as: </p>
   
-  <div class="post-list-container">
-    <h2>Posts</h2>
-    <ul id="post-list">
-      <% posts.forEach(function(post) { %>
-        <li class="single-post">
-          <div class="single-post-author"><%= post.author %></div>
-          <div class="single-post-date"><%= post.createdAt.toLocaleString('fr-FR', {
-            day: 'numeric',
-            year: 'numeric',
-            month: 'numeric', 
-            hour: 'numeric',
-            minute: 'numeric',
-          }) %></div>
-          <div class="single-post-content">
-            <%- post.content.replace('\n', '<br>') %>
-          </div>
-          <% if (post.image) { %>
-            <div class="single-post-image-container">
-              <img src="/img/post_image/<%= post.image %>" alt="<%= post.image %>" class="single-post-image">
+    <div id="server-status"></div>
+    
+    <div class="post-list-container">
+      <h2>Posts</h2>
+      <ul id="post-list">
+        <% posts.forEach(function(post) { %>
+          <li class="single-post">
+            <div class="single-post-author"><%= post.author %></div>
+            <div class="single-post-date"><%= post.createdAt.toLocaleString('fr-FR', {
+              day: 'numeric',
+              year: 'numeric',
+              month: 'numeric', 
+              hour: 'numeric',
+              minute: 'numeric',
+            }) %></div>
+            <div class="single-post-content">
+              <%- post.content.replace('\n', '<br>') %>
             </div>
-          <% } %>
-        </li>
-      <% }); %>
-    </ul>
-    <form id="post-form" method="POST" action="/post" enctype="multipart/form-data">
-      <div class="row">
-        <label for="content">Content: </label>
-        <textarea name="content" id="content" cols="100" rows="15" placeholder="Your publication"></textarea>
-      </div>
-      <div class="row">
-        <label for="image">Image (max 8 MB): </label>
-        <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg">
-      </div>
-      <button type="submit">Post</button>
-    </form>
-  </div>
-
+            <% if (post.image) { %>
+              <div class="single-post-image-container">
+                <img src="/img/post_image/<%= post.image %>" alt="<%= post.image %>" class="single-post-image">
+              </div>
+            <% } %>
+          </li>
+        <% }); %>
+      </ul>
+      <form id="post-form" method="POST" action="/post" enctype="multipart/form-data">
+        <div class="row">
+          <label for="content">Content: </label>
+          <textarea name="content" id="content" cols="100" rows="15" placeholder="Your publication"></textarea>
+        </div>
+        <div class="row">
+          <label for="image">Image (max 8 MB): </label>
+          <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg">
+        </div>
+        <button type="submit">Post</button>
+      </form>
+    </div>
+    
+  </main>
+  
 
 
 <%- include('partials/footer') %>

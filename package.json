@@ -1,6 +1,6 @@
 {
   "name": "mathis_gasparotto-chat-node-js",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "oui",
   "main": "src/server.ts",
   "repository": "https://github.com/Mathis-Gasparotto/social-network-nodejs",

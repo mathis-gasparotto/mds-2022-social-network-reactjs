@@ -7,6 +7,9 @@ export async function guestMiddleware(
   next: NextFunction
 ) {
   if (req.signedCookies.ssid && (await findUserById(req.signedCookies.ssid))) {
+    res.status(401).send({
+      message: 'Unauthorized',
+    })
     res.redirect('/')
     return
   }

@@ -8,15 +8,18 @@ import { guestMiddleware } from '../middlewares/guest'
 
 export function postLogin(app: Application) {
   app.post(
-    '/login',
+    '/api/v1/login',
     guestMiddleware,
-    bodyParser.urlencoded(),
+    bodyParser.json(),
     async (req, res) => {
       try {
         const user = await findUserByUsername(req.body.username)
         if (!user) {
-          let error = encodeURI('Invalid username')
-          res.status(401).redirect('/login?error=' + error)
+          res.status(401).send({
+            message: 'Invalid username',
+          })
+          // let error = encodeURI('Invalid username')
+          // res.status(401).redirect('/login?error=' + error)
           return
         }
         res.cookie('ssid', user.id, {
@@ -25,11 +28,15 @@ export function postLogin(app: Application) {
           expires: generateExpiresDateLoginCookie(),
           sameSite: true,
         })
-        res.redirect('/')
+        // res.redirect('/')
+        res.status(204).send({})
       } catch (e) {
         console.error(e)
-        const error = encodeURI('Internal Server Error')
-        res.status(500).send('/login?error=' + error)
+        res.status(500).send({
+          message: 'Internal Server Error',
+        })
+        // const error = encodeURI('Internal Server Error')
+        // res.status(500).send('/login?error=' + error)
       }
     }
   )

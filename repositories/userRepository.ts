@@ -65,7 +65,7 @@ export function deleteUser(id: string) {
 
 export function logoutUser(res: Response) {
   res.clearCookie('ssid')
-  res.redirect('/login')
+  // res.redirect('/login')
   return
 }
 

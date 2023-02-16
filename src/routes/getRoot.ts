@@ -6,7 +6,7 @@ import {
 } from '../../repositories/postRepository'
 
 export function getRoot(app: Application) {
-  app.get('/', async (req, res) => {
+  app.get('/api/v1/posts', async (req, res) => {
     var posts = Array()
     try {
       const postsDB = await getAllPosts()
@@ -26,7 +26,8 @@ export function getRoot(app: Application) {
         posts.sort(function (a, b) {
           return b.createdAt - a.createdAt
         })
-        res.render(path.join(__dirname, '../views/posts.ejs'), { posts })
+        res.status(200).send(posts)
+        // res.status(200).render(path.join(__dirname, '../views/posts.ejs'), { posts })
       }, 500) // add timeout to have time to get author name on DB
     } catch (e) {
       console.error(e)

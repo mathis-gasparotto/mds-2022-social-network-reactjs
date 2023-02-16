@@ -7,13 +7,19 @@ export async function authMiddleware(
   next: NextFunction
 ) {
   if (!req.signedCookies.ssid) {
-    res.redirect('/login')
+    res.status(401).send({
+      message: 'Unauthorized',
+    })
+    // res.redirect('/login')
     return
   }
   let user = await findUserById(req.signedCookies.ssid)
   if (!user) {
     res.clearCookie('ssid')
-    res.redirect('/login')
+    res.status(401).send({
+      message: 'Unauthorized',
+    })
+    // res.redirect('/login')
     return
   }
   next()

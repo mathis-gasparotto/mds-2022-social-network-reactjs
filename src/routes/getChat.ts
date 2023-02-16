@@ -35,7 +35,8 @@ export function getChat(app: Application) {
         messages.sort(function (a, b) {
           return b.createdAt + a.createdAt
         })
-        res.render(path.join(__dirname, '../views/chat.ejs'), { messages })
+        res.status(200).send(messages)
+        // res.status(200).render(path.join(__dirname, '../views/chat.ejs'), { messages })
       }, 500) // add timeout to have time to get author name on DB
     } catch (e) {
       console.error(e)

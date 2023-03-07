@@ -12,7 +12,7 @@ export function ErrorPage() {
       'status' in error &&
       error.status === '401'
     ) {
-      navigate('login')
+      navigate('/login')
     }
   }, [])
 

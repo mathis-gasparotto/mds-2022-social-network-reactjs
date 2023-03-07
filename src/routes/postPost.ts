@@ -3,14 +3,15 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import fileUpload, { UploadedFile } from 'express-fileupload'
 import { v4 as uuidv4 } from 'uuid'
-import { createPost } from '../../repositories/postRepository'
+import { createPost } from '../repositories/postRepository'
 import { WebSocket } from 'ws'
-import { findUserById } from '../../repositories/userRepository'
+import { findUserById } from '../repositories/userRepository'
 
 export function postPost(app: Application, sockets: Map<string, WebSocket>) {
   app.post(
-    '/post',
-    bodyParser.urlencoded(),
+    '/api/v1/post',
+    bodyParser.json(),
+    // bodyParser.urlencoded(),
     fileUpload({
       limits: {
         fileSize: 8 * (1024 * 1024), // max 8 MB
@@ -48,8 +49,9 @@ export function postPost(app: Application, sockets: Map<string, WebSocket>) {
       let post = req.body
       try {
         if (!post.content) {
-          const error = encodeURI('Post content not be null')
-          res.status(400).redirect('/?error=' + error)
+          res.status(400).send({message: 'Post content not be null'})
+          // const error = encodeURI('Post content not be null')
+          // res.status(400).redirect('/?error=' + error)
           return
         }
         const imageToSave = file ? file.name : ''
@@ -58,29 +60,31 @@ export function postPost(app: Application, sockets: Map<string, WebSocket>) {
           post.content,
           imageToSave
         )
-        const user = await findUserById(req.signedCookies.ssid)
-        if (!user) {
-          return
-        }
-        sockets.forEach((socket) => {
-          socket.send(
-            JSON.stringify({
-              type: 'post',
-              data: {
-                author: user.name,
-                date: createdPost.createdAt,
-                content: post.content,
-                image: '/img/post_image/' + imageToSave,
-              },
-            })
-          )
-        })
-        const state = encodeURI('Post send successfully!')
-        res.status(401).redirect('/?success=' + state)
+        // const user = await findUserById(req.signedCookies.ssid)
+        // if (!user) {
+        //   return
+        // }
+        // sockets.forEach((socket) => {
+        //   socket.send(
+        //     JSON.stringify({
+        //       type: 'post',
+        //       data: {
+        //         author: user.name,
+        //         date: createdPost.createdAt,
+        //         content: post.content,
+        //         image: '/img/post_image/' + imageToSave,
+        //       },
+        //     })
+        //   )
+        // })
+        res.status(201).send(createdPost)
+        // const state = encodeURI('Post send successfully!')
+        // res.status(201).redirect('/?success=' + state)
       } catch (e) {
         console.error(e)
-        const error = encodeURI('Internal Server Error')
-        res.status(500).redirect('/?error=' + error)
+        res.status(500).send({message: 'Internal Server Error'})
+        // const error = encodeURI('Internal Server Error')
+        // res.status(500).redirect('/?error=' + error)
       }
     }
   )

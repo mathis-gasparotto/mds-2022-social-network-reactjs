@@ -1,7 +1,7 @@
 import { Application } from 'express-ws'
 import { WebSocket } from 'ws'
-import { createMessage } from '../../repositories/chatRepository'
-import { findUserById, sendName } from '../../repositories/userRepository'
+import { createMessage } from '../repositories/chatRepository'
+import { findUserById, sendName } from '../repositories/userRepository'
 
 export function getWsChat(app: Application, sockets: Map<string, WebSocket>) {
   app.ws('/ws-chat', async (ws, req) => {

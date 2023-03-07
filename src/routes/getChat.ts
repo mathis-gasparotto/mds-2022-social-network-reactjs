@@ -3,8 +3,8 @@ import path from 'path'
 import {
   getAllMessages,
   getAuthorNameByMessageId,
-} from '../../repositories/chatRepository'
-import { findUserById } from '../../repositories/userRepository'
+} from '../repositories/chatRepository'
+import { findUserById } from '../repositories/userRepository'
 
 export function getChat(app: Application) {
   app.get('/chat', async (req, res) => {

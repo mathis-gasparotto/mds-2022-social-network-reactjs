@@ -3,7 +3,7 @@ import { Application } from 'express-ws'
 import {
   createUser,
   generateExpiresDateLoginCookie,
-} from '../../repositories/userRepository'
+} from '../repositories/userRepository'
 import { guestMiddleware } from '../middlewares/guest'
 
 export function postRegister(app: Application) {

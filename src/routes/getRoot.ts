@@ -3,10 +3,10 @@ import path from 'path'
 import {
   getAllPosts,
   getAuthorNameByPostId,
-} from '../../repositories/postRepository'
+} from '../repositories/postRepository'
 
 export function getRoot(app: Application) {
-  app.get('/api/v1/posts', async (req, res) => {
+  app.get('/api/v1/post', async (req, res) => {
     var posts = Array()
     try {
       const postsDB = await getAllPosts()

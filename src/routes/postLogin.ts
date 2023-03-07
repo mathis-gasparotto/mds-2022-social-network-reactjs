@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import {
   findUserByUsername,
   generateExpiresDateLoginCookie,
-} from '../../repositories/userRepository'
+} from '../repositories/userRepository'
 import { guestMiddleware } from '../middlewares/guest'
 
 export function postLogin(app: Application) {

@@ -1,6 +1,22 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { ActionFunctionArgs, Link, redirect, useNavigate } from "react-router-dom";
 import { Alert } from "../components/Alert";
+import { fetchWithErrorHandling } from "../helpers/fetchWithErrorHandling";
+
+export async function registerAction({ request }: ActionFunctionArgs) {
+  const formData = await request.formData()
+  await fetchWithErrorHandling('/api/v1/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username: formData.get('username'),
+      name: formData.get('name'),
+    }),
+  })
+  return redirect('/')
+}
 
 export function Register() {
   const navigate = useNavigate()

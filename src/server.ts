@@ -17,6 +17,10 @@ import { getProfile } from './routes/getProfile'
 import { postProfile } from './routes/postProfile'
 import { postDeleteAccount } from './routes/postDeleteAccount'
 import { postPost } from './routes/postPost'
+import { getEvents } from './routes/getEvents'
+import { postEvents } from './routes/postEvents'
+import { putProfile } from './routes/putProfile'
+import { deleteProfile } from './routes/deleteProfile'
 
 function main() {
   const app = express() as unknown as Application
@@ -36,11 +40,15 @@ function main() {
   getChat(app)
   getProfile(app)
   postProfile(app)
+  putProfile(app)
   postPost(app, sockets)
   getWsPost(app, sockets)
   getWsChat(app, sockets)
   postLogout(app)
   postDeleteAccount(app)
+  deleteProfile(app)
+  getEvents(app)
+  postEvents(app)
 
   app.listen(3000, () => {
     console.log('App listenning on http://localhost:3000/')

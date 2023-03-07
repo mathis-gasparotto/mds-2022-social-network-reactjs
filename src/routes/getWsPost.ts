@@ -1,7 +1,7 @@
 import { Application } from 'express-ws'
 import { WebSocket } from 'ws'
-import { createPost } from '../../repositories/postRepository'
-import { findUserById, sendName } from '../../repositories/userRepository'
+import { createPost } from '../repositories/postRepository'
+import { findUserById, sendName } from '../repositories/userRepository'
 
 export function getWsPost(app: Application, sockets: Map<string, WebSocket>) {
   app.ws('/ws-post', async (ws, req) => {

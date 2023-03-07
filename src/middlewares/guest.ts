@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { findUserById } from '../../repositories/userRepository'
+import { findUserById } from '../repositories/userRepository'
 
 export async function guestMiddleware(
   req: Request,

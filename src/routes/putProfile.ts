@@ -4,10 +4,11 @@ import bodyParser from 'body-parser'
 import { findUserById, updateUser } from '../repositories/userRepository'
 import fileUpload, { UploadedFile } from 'express-fileupload'
 
-export function postProfile(app: Application) {
-  app.post(
-    '/profile',
-    bodyParser.urlencoded(),
+export function putProfile(app: Application) {
+  app.put(
+    '/api/v1/profile',
+    // bodyParser.urlencoded(),
+    bodyParser.json(),
     fileUpload({
       limits: {
         fileSize: 8 * (1024 * 1024), // max 8 MB
@@ -24,8 +25,9 @@ export function postProfile(app: Application) {
         const allowedExtension = ['.png', '.jpg', '.jpeg']
 
         if (!allowedExtension.includes(extensionName)) {
-          const error = encodeURI('Invalid Image')
-          return res.status(422).redirect('/profile?error=' + error)
+          return res.status(422).send({message: 'Invalid Image'})
+          // const error = encodeURI('Invalid Image')
+          // return res.status(422).redirect('/profile?error=' + error)
         }
 
         file.name = req.signedCookies.ssid + extensionName
@@ -49,23 +51,27 @@ export function postProfile(app: Application) {
           return
         }
         if (!user.name) {
-          const error = encodeURI('Name property not be null')
-          res.status(400).redirect('/profile?error=' + error)
+          res.status(400).send({message: 'Name property must be not null'})
+          // const error = encodeURI('Name property not be null')
+          // res.status(400).redirect('/profile?error=' + error)
           return
         }
         if (!user.username) {
-          const error = encodeURI('Username property not be null')
-          res.status(400).redirect('/profile?error=' + error)
+          res.status(400).send({message: 'Username property must be not null'})
+          // const error = encodeURI('Username property not be null')
+          // res.status(400).redirect('/profile?error=' + error)
           return
         }
         if (typeof user.name !== 'string') {
-          const error = encodeURI('Name property must be a string')
-          res.status(400).redirect('/profile?error=' + error)
+          res.status(400).send({message: 'Name property must be a string'})
+          // const error = encodeURI('Name property must be a string')
+          // res.status(400).redirect('/profile?error=' + error)
           return
         }
         if (typeof user.username !== 'string') {
-          const error = encodeURI('Username property must be a string')
-          res.status(400).redirect('/profile?error=' + error)
+          res.status(400).send({message: 'Username property must be a string'})
+          // const error = encodeURI('Username property must be a string')
+          // res.status(400).redirect('/profile?error=' + error)
           return
         }
         user.avatar = avatarToSave ? avatarToSave : currentUser.avatar
@@ -75,12 +81,14 @@ export function postProfile(app: Application) {
           user.name,
           user.avatar
         )
-        const state = encodeURI('Profile updated successfully!')
-        res.redirect('/profile?success=' + state)
+        res.status(200).send({message: 'Profile updated successfully!'})
+        // const state = encodeURI('Profile updated successfully!')
+        // res.redirect('/profile?success=' + state)
       } catch (e) {
         console.error(e)
-        const error = encodeURI('Internal Server Error')
-        res.status(500).redirect('/profile?error=' + error)
+        res.status(500).send({message: 'Internal Server Error'})
+        // const error = encodeURI('Internal Server Error')
+        // res.status(500).redirect('/profile?error=' + error)
       }
     }
   )

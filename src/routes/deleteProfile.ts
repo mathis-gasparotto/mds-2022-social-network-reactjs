@@ -1,10 +1,10 @@
 import { Application } from 'express-ws'
 import { deleteUser, logoutUser } from '../repositories/userRepository'
 
-export function postDeleteAccount(app: Application) {
-  app.post('/delete-account', async (req, res) => {
+export function deleteProfile(app: Application) {
+  app.delete('/api/v1/profile', async (req, res) => {
     await deleteUser(req.signedCookies.ssid)
     logoutUser(res)
-    return
+    return res.status(200).send({ message: 'OK' })
   })
 }

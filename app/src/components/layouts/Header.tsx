@@ -13,6 +13,9 @@ export function Header() {
             <Link to="/chat" className="nav-link">Chat</Link>
           </li>
           <li className="nav-item">
+            <Link to="/events" className="nav-link">Events</Link>
+          </li>
+          <li className="nav-item">
             <Link to="/profile" className="nav-link">My Account</Link>
           </li>
           <li className="nav-item">

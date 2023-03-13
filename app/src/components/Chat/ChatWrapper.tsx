@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from 'react'
 
 type ChatWrapperProps = {
   children: ReactNode,
@@ -6,17 +6,15 @@ type ChatWrapperProps = {
 }
 
 export function ChatWrapper(props: ChatWrapperProps) {
-  let style = props.style || {}
-  style.backgroundColor = '#fff'
+  const style = {
+    ...props.style,
+    backgroundColor : '#fff'
+  }
   return (
-    <div className="message-list-container" style={props.style}>
+    <div className="message-list-container" style={style}>
       <ul id="message-list">
         {props.children}
       </ul>
-      <form id="message-form">
-        <input type="text" name="msg" id="msg" />
-        <button type="submit">Submit</button>
-      </form>
     </div>
   )
 }

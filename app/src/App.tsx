@@ -4,7 +4,7 @@ import { Login, loginAction } from './views/Login'
 import { addPostAction, feedLoader, Post } from './views/Post'
 import { Register, registerAction } from './views/Register'
 import './assets/style/main.css'
-import { Chat } from './views/Chat'
+import { ChatView } from './views/ChatView'
 import { ErrorPage } from './views/ErrorPage'
 import { AppLayout } from './components/AppLayout'
 import {
@@ -41,7 +41,7 @@ const router = createBrowserRouter( [
       },
       {
         path: '/chat',
-        element: <Chat />
+        element: <ChatView />
       },
       {
         path: '/profile',

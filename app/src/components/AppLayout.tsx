@@ -1,7 +1,7 @@
-import { Outlet } from "react-router";
-import { ChatMessage } from "./Chat/ChatMessage";
-import { ChatWrapper } from "./Chat/ChatWrapper";
-import { Header } from "./layouts/Header";
+import { Outlet } from 'react-router'
+import { ChatMessage } from './Chat/ChatMessage'
+import { ChatWrapper } from './Chat/ChatWrapper'
+import { Header } from './layouts/Header'
 
 export function AppLayout() {
   return (

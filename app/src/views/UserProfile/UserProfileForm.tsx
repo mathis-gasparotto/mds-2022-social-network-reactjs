@@ -1,7 +1,7 @@
 import { Form, Outlet, redirect } from 'react-router-dom'
 import { fetchWithErrorHandling } from '../../helpers/fetchWithErrorHandling'
 import { ActionFunctionArgs } from '@remix-run/router/utils'
-import { Alert } from '../../components/Alert';
+import { Alert } from '../../components/Alert'
 
 export type UserProfileData = { id: number; name: string; username: string, avatar: string }
 
@@ -75,6 +75,9 @@ export function UserProfileForm({ error, data }: { error?: Error; data?: UserPro
           <label htmlFor="avatar">New Avatar (void for no update) (max 8 MB): </label>
           <input type="file" name="avatar" id="avatar" accept="image/png, image/jpeg, image/jpg" />
         </div>
+        {error && 
+          <Alert state="danger" message={error.toString()}/>
+        }
         <button type="submit" className="btn">Submit</button>
       </Form>
       

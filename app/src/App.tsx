@@ -1,20 +1,20 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import { Footer } from "./components/layouts/Footer"
-import { Login, loginAction } from "./views/Login"
-import { addPostAction, feedLoader, Post } from "./views/Post"
-import { Register, registerAction } from "./views/Register"
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Footer } from './components/layouts/Footer'
+import { Login, loginAction } from './views/Login'
+import { addPostAction, feedLoader, Post } from './views/Post'
+import { Register, registerAction } from './views/Register'
 import './assets/style/main.css'
-import { Chat } from "./views/Chat"
-import { ErrorPage } from "./components/ErrorPage"
-import { AppLayout } from "./components/AppLayout"
+import { Chat } from './views/Chat'
+import { ErrorPage } from './components/ErrorPage'
+import { AppLayout } from './components/AppLayout'
 import {
   deleteUserProfileAction,
   updateUserProfileAction,
   userProfileLoader,
 } from './views/UserProfile/UserProfileForm'
-import { addEventAction, Events, eventsLoader } from "./views/Events"
-import { UserProfile } from "./views/UserProfile/UserProfile"
-import { UserProfileError } from "./views/UserProfile/UserProfileError"
+import { addEventAction, Events, eventsLoader } from './views/Events'
+import { UserProfile } from './views/UserProfile/UserProfile'
+import { UserProfileError } from './views/UserProfile/UserProfileError'
 
 const router = createBrowserRouter( [
   {

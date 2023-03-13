@@ -21,6 +21,9 @@ import { getEvents } from './routes/getEvents'
 import { postEvents } from './routes/postEvents'
 import { putProfile } from './routes/putProfile'
 import { deleteProfile } from './routes/deleteProfile'
+import { getEvent } from './routes/getEvent'
+import { putEvent } from './routes/putEvent'
+import { deleteEvent } from './routes/deleteEvent'
 
 function main() {
   const app = express() as unknown as Application
@@ -49,6 +52,9 @@ function main() {
   deleteProfile(app)
   getEvents(app)
   postEvents(app)
+  getEvent(app)
+  putEvent(app)
+  deleteEvent(app)
 
   app.listen(3000, () => {
     console.log('App listenning on http://localhost:3000/')

@@ -18,3 +18,34 @@ export function findAllEvents() {
     },
   })
 }
+
+export function findEventById(id: string) {
+  return prisma.event.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      createdBy: true,
+    },
+  })
+}
+
+export function updateEventById(id: string, title: string, date: string) {
+  return prisma.event.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
+      date: new Date(date),
+    },
+  })
+}
+
+export function deleteEventById(id: string) {
+  return prisma.event.delete({
+    where: {
+      id,
+    },
+  })
+}

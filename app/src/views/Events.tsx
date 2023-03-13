@@ -1,6 +1,7 @@
-import { ActionFunctionArgs, Form, useLoaderData } from 'react-router-dom'
-import { useState } from 'react'
+import { ActionFunctionArgs, Form, Link, useLoaderData } from 'react-router-dom'
 import { fetchWithErrorHandling } from '../helpers/fetchWithErrorHandling'
+import { useState } from 'react'
+import { EventForm } from '../components/Forms/EventForm'
 
 type EventsData = {
   id: number
@@ -55,9 +56,7 @@ export const Events = () => {
       <h1>Events</h1>
 
       <Form method="post">
-        <input type="text" name="title" placeholder="Title of the event 📆" />
-        <input type="date" name="date" />
-        <button type="submit">Submit</button>
+        <EventForm />
       </Form>
 
       <p>
@@ -72,14 +71,8 @@ export const Events = () => {
       {sortedByDate.map(event => (
         <div key={event.id}>
           <h2>{event.title}</h2>
-          <p>Date: {new Date(event.date).toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            year: 'numeric',
-            month: 'numeric', 
-            hour: 'numeric',
-            minute: 'numeric',
-          })}</p>
-          <p>Created by: {event.createdBy.name}</p>
+          <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+          <Link to={`/events/${event.id}`}>See details</Link>
         </div>
       ))}
     </>

@@ -1,5 +1,7 @@
-import { ActionFunctionArgs, Form, useLoaderData } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { ActionFunctionArgs, Form } from 'react-router-dom'
 import { fetchWithErrorHandling } from '../helpers/fetchWithErrorHandling'
+import { ErrorPage } from './ErrorPage'
 
 type FeedData = {
   id: number,
@@ -32,13 +34,43 @@ export async function addPostAction({ request }: ActionFunctionArgs) {
 }
 
 export function Post() {
-  const data = useLoaderData() as FeedData
+  const [data, setData] = useState<FeedData | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const sortedData = data.sort((a, b) => {
+  const sortedData = data?.sort((a, b) => {
     const dateA = new Date(a.createdAt)
     const dateB = new Date(b.createdAt)
     return dateB.getTime() - dateA.getTime()
   })
+
+  const hasFetched = useRef(false)
+  useEffect(() => {
+    if (hasFetched.current) {
+      return
+    }
+
+    async function load() {
+      setLoading(true)
+      try {
+        setData(await fetchWithErrorHandling(`/api/v1/post`))
+      } catch (e) {
+        setError(e instanceof Error ? e.message : 'Something went wrong')
+      }
+      setLoading(false)
+    }
+
+    load()
+    hasFetched.current = true
+  }, [])
+
+  if (loading || !data) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <ErrorPage />
+  }
 
   return (
     <>
@@ -51,7 +83,7 @@ export function Post() {
       <div className="post-list-container">
         <h2>Posts</h2>
         <ul id="post-list">
-          {sortedData.map((post) => (
+          {sortedData?.map((post) => (
             <li className="single-post" key={post.id}>
               <div className="single-post-author">{post.author}</div>
               <div className="single-post-date">{new Date(post.createdAt).toLocaleString('fr-FR', {

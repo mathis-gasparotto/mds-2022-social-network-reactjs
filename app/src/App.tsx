@@ -5,7 +5,7 @@ import { addPostAction, feedLoader, Post } from './views/Post'
 import { Register, registerAction } from './views/Register'
 import './assets/style/main.css'
 import { Chat } from './views/Chat'
-import { ErrorPage } from './components/ErrorPage'
+import { ErrorPage } from './views/ErrorPage'
 import { AppLayout } from './components/AppLayout'
 import {
   deleteUserProfileAction,
@@ -15,6 +15,7 @@ import {
 import { addEventAction, Events, eventsLoader } from './views/Events'
 import { UserProfile } from './views/UserProfile/UserProfile'
 import { UserProfileError } from './views/UserProfile/UserProfileError'
+import { deleteEventAction, Event, eventLoader, updateEventAction } from './views/Event'
 
 const router = createBrowserRouter( [
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter( [
     children: [
       {
         path: '/',
-        loader: feedLoader,
+        // loader: feedLoader,
         action: addPostAction,
         element: <Post/>
       },
@@ -61,6 +62,19 @@ const router = createBrowserRouter( [
         loader: eventsLoader,
         action: addEventAction,
         element: <Events />,
+      },
+      {
+        path: '/events/:eventId',
+        loader: eventLoader,
+        action: updateEventAction,
+        element: <Event />,
+        children: [
+          {
+            path: '/events/:eventId/delete',
+            action: deleteEventAction,
+            errorElement: <div>Oops, cannot delete event</div>,
+          },
+        ],
       }
     ]
   },

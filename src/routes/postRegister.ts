@@ -4,12 +4,12 @@ import {
   createUser,
   generateExpiresDateLoginCookie,
 } from '../repositories/userRepository'
-import { guestMiddleware } from '../middlewares/guest'
+// import { guestMiddleware } from '../middlewares/guest'
 
 export function postRegister(app: Application) {
   app.post(
     '/api/v1/register',
-    guestMiddleware,
+    // guestMiddleware,
     bodyParser.json(),
     async (req, res) => {
       try {

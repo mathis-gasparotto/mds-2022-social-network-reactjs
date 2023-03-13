@@ -4,12 +4,12 @@ import {
   findUserByUsername,
   generateExpiresDateLoginCookie,
 } from '../repositories/userRepository'
-import { guestMiddleware } from '../middlewares/guest'
+// import { guestMiddleware } from '../middlewares/guest'
 
 export function postLogin(app: Application) {
   app.post(
     '/api/v1/login',
-    guestMiddleware,
+    // guestMiddleware,
     bodyParser.json(),
     async (req, res) => {
       try {
@@ -29,7 +29,7 @@ export function postLogin(app: Application) {
           sameSite: true,
         })
         // res.redirect('/')
-        res.status(204).send({})
+        res.status(200).send({ success: true })
       } catch (e) {
         console.error(e)
         res.status(500).send({

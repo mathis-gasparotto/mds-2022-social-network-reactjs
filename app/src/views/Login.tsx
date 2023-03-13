@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { ActionFunctionArgs, Form, Link, redirect } from "react-router-dom"
-import { Alert } from "../components/Alert"
-import { fetchWithErrorHandling } from "../helpers/fetchWithErrorHandling"
+import { useState } from 'react'
+import { ActionFunctionArgs, Form, Link, redirect } from 'react-router-dom'
+import { Alert } from '../components/Alert'
+import { fetchWithErrorHandling } from '../helpers/fetchWithErrorHandling'
 
 export async function loginAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData()

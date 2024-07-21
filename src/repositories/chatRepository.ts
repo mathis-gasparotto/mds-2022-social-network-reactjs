@@ -10,8 +10,8 @@ export async function createMessage(authorId: string, content: string) {
   })
 }
 
-export async function getAllMessages() {
-  return await prisma.chat.findMany()
+export function getAllMessages() {
+  return prisma.chat.findMany()
 }
 
 export async function findMessageById(id: string) {

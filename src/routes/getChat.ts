@@ -1,13 +1,10 @@
 import { Application } from 'express-ws'
 import path from 'path'
-import {
-  getAllMessages,
-  getAuthorNameByMessageId,
-} from '../repositories/chatRepository'
+import { getAllMessages } from '../repositories/chatRepository'
 import { findUserById } from '../repositories/userRepository'
 
 export function getChat(app: Application) {
-  app.get('/chat', async (req, res) => {
+  app.get('/api/v1/chat', async (req, res) => {
     try {
       const user = await findUserById(req.signedCookies.ssid)
       if (!user) {
@@ -21,8 +18,9 @@ export function getChat(app: Application) {
       }
       messagesDB.forEach(async (message) => {
         let dataToPush = {
-          author: await getAuthorNameByMessageId(message.id),
-          isMe: false,
+          id: message.id,
+          author: await findUserById(message.id)?.then((user) => user?.name),
+          isMe: user.id === message.authorId,
           content: message.content,
           createdAt: message.createdAt,
         }

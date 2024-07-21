@@ -16,6 +16,7 @@ export function getRoot(app: Application) {
       }
       postsDB.forEach(async (post) => {
         posts.push({
+          id: post.id,
           author: await getAuthorNameByPostId(post.id),
           content: post.content,
           image: post.image,

@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Footer } from './components/layouts/Footer'
 import { Login, loginAction } from './views/Login'
-import { addPostAction, feedLoader, Post } from './views/Post'
+import { feedLoader, Post } from './views/Post'
 import { Register, registerAction } from './views/Register'
 import './assets/style/main.css'
 import { ChatView } from './views/ChatView'
@@ -16,6 +16,7 @@ import { addEventAction, Events, eventsLoader } from './views/Events'
 import { UserProfile } from './views/UserProfile/UserProfile'
 import { UserProfileError } from './views/UserProfile/UserProfileError'
 import { deleteEventAction, Event, eventLoader, updateEventAction } from './views/Event'
+// import { chatLoader } from './components/Chat/Chat'
 
 const router = createBrowserRouter( [
   {
@@ -31,16 +32,17 @@ const router = createBrowserRouter( [
   {
     path: '/',
     errorElement: <ErrorPage/>,
+    loader: userProfileLoader,
     element: <AppLayout/>,
     children: [
       {
         path: '/',
-        // loader: feedLoader,
-        action: addPostAction,
+        loader: feedLoader,
         element: <Post/>
       },
       {
         path: '/chat',
+        // loader: chatLoader,
         element: <ChatView />
       },
       {

@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
-import { ActionFunctionArgs, Form } from 'react-router-dom'
+import { useState } from 'react'
+import { Form, useLoaderData } from 'react-router-dom'
 import { fetchWithErrorHandling } from '../helpers/fetchWithErrorHandling'
 import { ErrorPage } from './ErrorPage'
 
 type FeedData = {
-  id: number,
-  author: string,
-  createdAt: Date,
-  content: string,
+  id: string
+  author: string
+  createdAt: Date
+  content: string
   image?: string
 }[]
 
@@ -19,52 +19,53 @@ export async function feedLoader() {
   return (await response.json()) as FeedData
 }
 
-export async function addPostAction({ request }: ActionFunctionArgs) {
-  const formData = await request.formData()
-  const post = await fetchWithErrorHandling('/api/v1/post', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      content: formData.get('content'),
-    }),
-  })
-  return { post }
-}
-
 export function Post() {
-  const [data, setData] = useState<FeedData | null>(null)
+  const data = useLoaderData() as FeedData
+  const [feed, setFeed] = useState(data)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [sortedBy, setSortedBy] = useState<'date' | 'name'>('date')
 
-  const sortedData = data?.sort((a, b) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const sendPost = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    try {
+      await fetchWithErrorHandling('/api/v1/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: form.content.value,
+        }),
+      })
+      // formData.get('image') && await fetch('/api/v1/post_image/' + post.id, {
+      //   method: 'POST',
+      //   body: formData.get('image'),
+      // })
+      setFeed(await feedLoader())
+    } catch (e: any) {
+      setError(e.message)
+    }
+    form.reset()
+    scrollToTop()
+  }
+
+  const sortedData = feed?.sort((a, b) => {
+    if (sortedBy === 'name') {
+      return a.content.localeCompare(b.content)
+    }
+
     const dateA = new Date(a.createdAt)
     const dateB = new Date(b.createdAt)
     return dateB.getTime() - dateA.getTime()
   })
 
-  const hasFetched = useRef(false)
-  useEffect(() => {
-    if (hasFetched.current) {
-      return
-    }
-
-    async function load() {
-      setLoading(true)
-      try {
-        setData(await fetchWithErrorHandling(`/api/v1/post`))
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Something went wrong')
-      }
-      setLoading(false)
-    }
-
-    load()
-    hasFetched.current = true
-  }, [])
-
-  if (loading || !data) {
+  if (loading || !feed) {
     return <div>Loading...</div>
   }
 
@@ -76,39 +77,56 @@ export function Post() {
     <>
       <h1>Post</h1>
 
-      <p id="connected">Connected as: </p>
-    
-      <div id="server-status"></div>
-      
+      <p>
+        <button type="button" onClick={() => setSortedBy('date')}>
+          Sort by date
+        </button>
+        <button type="button" onClick={() => setSortedBy('name')}>
+          Sort by name
+        </button>
+      </p>
+
       <div className="post-list-container">
         <h2>Posts</h2>
         <ul id="post-list">
           {sortedData?.map((post) => (
             <li className="single-post" key={post.id}>
               <div className="single-post-author">{post.author}</div>
-              <div className="single-post-date">{new Date(post.createdAt).toLocaleString('fr-FR', {
-                day: 'numeric',
-                year: 'numeric',
-                month: 'numeric', 
-                hour: 'numeric',
-                minute: 'numeric',
-              })}</div>
+              <div className="single-post-date">
+                {new Date(post.createdAt).toLocaleString('fr-FR', {
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                })}
+              </div>
               <div className="single-post-content">
                 {post.content.replace('\n', '<br>')}
               </div>
-              {post.image &&
+              {post.image && (
                 <div className="single-post-image-container">
-                  <img src={'/api/img/post_image/' + post.image} alt={post.image} className="single-post-image" />
+                  <img
+                    src={'/api/img/post_image/' + post.image}
+                    alt={post.image}
+                    className="single-post-image"
+                  />
                 </div>
-              }
+              )}
             </li>
           ))}
         </ul>
         {/* <Form id="post-form" method="post" encType="multipart/form-data"> */}
-        <Form id="post-form" method="post">
+        <Form id="post-form" onSubmit={sendPost}>
           <div className="row">
             <label htmlFor="content">Content: </label>
-            <textarea name="content" id="content" cols={100} rows={15} placeholder="Your publication" />
+            <textarea
+              name="content"
+              id="content"
+              cols={100}
+              rows={15}
+              placeholder="Your publication"
+            />
           </div>
           {/* <div className="row">
             <label htmlFor="image">Image (max 8 MB): </label>
